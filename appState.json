@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "contactUs/lambda.js",
-        "code": "let AWS = require('aws-sdk');\nconst ses = new AWS.SES();\n\nexports.handler = function async (event, context, callback) {\n    console.log(event)\n\n    var {who,email,name,phoneNumber,city} = event.body\n    var data \n    if (who == \"user\") {\n        data = `${name} wants to know more about Wazifa. You can reach them at ${email} or ${phoneNumber}. He lives in ${city}`\n    } else {\n        data = `${name} wants to join Wazifa. You can reach them at ${email} or ${phoneNumber}. They operate from ${city}`\n    }\n\n    ses.sendEmail({\n        Destination: {\n            ToAddresses: ['karlgharios@hotmail.com', 'knhatem@gmail.com'],\n            CcAddresses: [],\n            BccAddresses: []\n        },\n        Message: {\n            Body: {\n                Text: {\n                    Data: data\n                }\n            },\n            Subject: {\n                Data: 'Contact Request from' + name\n            }\n        },\n        Source: 'Wazifa No Reply <no-reply@wazifa.solutions>',\n    }, function (err, data) {\n        console.log(err,data)\n            const response = {\n            statusCode: 200,\n           headers: {\n            'Access-Control-Allow-Origin' : '*',\n            'Access-Control-Allow-Headers':'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',\n            'Access-Control-Allow-Credentials' : true,\n            'Content-Type': 'application/json'\n        },\n            body: JSON.stringify({ \"message\": \"Success\" })\n            };\n        if (err) callback(null, response ); // an error occurred\n        else callback(null, response);           // successful response\n    });\n}",
+        "code": "let AWS = require('aws-sdk');\nconst ses = new AWS.SES();\n\nexports.handler = function async(event, context, callback) {\n    console.log(event)\n\n    var { who, email, name, phoneNumber, city } = event.body\n    var data\n    if (who == \"user\") {\n        data = `${name} wants to know more about Wazifa. You can reach them at ${email} or ${phoneNumber}. He lives in ${city}`\n    } else {\n        data = `${name} wants to join Wazifa. You can reach them at ${email} or ${phoneNumber}. They operate from ${city}`\n    }\n\n    ses.sendEmail({\n        Destination: {\n            ToAddresses: ['karlgharios@hotmail.com', 'knhatem@gmail.com'],\n            CcAddresses: [],\n            BccAddresses: []\n        },\n        Message: {\n            Body: {\n                Text: {\n                    Data: data\n                }\n            },\n            Subject: {\n                Data: 'Contact Request from' + name\n            }\n        },\n        Source: 'Wazifa No Reply <no-reply@wazifa.solutions>',\n    }, function (err, data) {\n        console.log(err, data)\n        const response = {\n            statusCode: 200,\n            headers: {\n                'Access-Control-Allow-Origin': '*',\n                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',\n                'Access-Control-Allow-Credentials': true,\n                'Content-Type': 'application/json'\n            },\n            body: JSON.stringify({ \"message\": \"Success\" })\n        };\n        if (err) callback(null, { \"message\": \"Error\" }); // an error occurred\n        else callback(null, response);           // successful response\n    });\n}",
         "config": {
           "runtime": "nodejs8.10",
           "handler": "handler",
@@ -35,7 +35,21 @@
             "resourceName": "apigusEast1WazifaAdmincontactUspost",
             "config": {}
           }
-        ]
+        ],
+        "testCases": {
+          "ff9e3b85-8978-457f-a5e4-009ceeb90b0d": {
+            "id": "ff9e3b85-8978-457f-a5e4-009ceeb90b0d",
+            "name": "Unnamed event",
+            "functionId": "9be89e5c-ede2-4dea-b684-1db1604b26e1",
+            "event": ""
+          },
+          "d6178d31-d61d-4e58-9ae7-b2e8327cd670": {
+            "id": "d6178d31-d61d-4e58-9ae7-b2e8327cd670",
+            "name": "Unnamed event",
+            "functionId": "9be89e5c-ede2-4dea-b684-1db1604b26e1",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
       }
     },
     "deletedFiles": [],
@@ -63,6 +77,24 @@
           "stageName": "Prod",
           "mode": 0
         }
+      },
+      "ses-karlgharios@hotmail.com": {
+        "name": "ses-karlgharios@hotmail.com",
+        "type": "SES",
+        "config": {
+          "selectedIdentity": "karlgharios@hotmail.com",
+          "projectRegion": "us-east-1",
+          "params": {
+            "to": "karlgharios@hotmail.com",
+            "cc": "karlgharios@hotmail.com",
+            "bcc": "karlgharios@hotmail.com",
+            "subject": "asd",
+            "body": {
+              "text": "asdas",
+              "html": ""
+            }
+          }
+        }
       }
     },
     "customTemplate": {
@@ -80,7 +112,15 @@
       }
     ],
     "packageJSON": {
-      "dependencies": {}
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "language": "javascript",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        }
+      }
     }
   },
   "PROJECT_META": {
@@ -90,7 +130,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1569254532706
+    "lastSave": 1569257603230
   },
   "VCS_STATE": {
     "provider": "GitHub",
