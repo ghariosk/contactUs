@@ -28,7 +28,7 @@ exports.handler = function async(event, context, callback) {
                 Data: 'Contact Request from' + name
             }
         },
-        Source: 'Wazifa No Reply <no-reply@wazifa.solutions>',
+        Source: 'Wazifa No Reply <no-reply@wazifa.solutions>'
     }, function (err, data) {
         console.log(err, data)
         const response = {
