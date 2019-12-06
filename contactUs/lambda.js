@@ -4,17 +4,19 @@ const ses = new AWS.SES();
 exports.handler = function async(event, context, callback) {
     console.log(event)
 
-    var { who, email, name, phoneNumber, city } = event.body
+    var { who, email, name, phoneNumber, city, description } = event.body
     var data
-    if (who == "user") {
+    if (who == "eater") {
         data = `${name} wants to know more about Wazifa. You can reach them at ${email} or ${phoneNumber}. He lives in ${city}`
-    } else {
+    } else if (who=="baker") {
         data = `${name} wants to join Wazifa. You can reach them at ${email} or ${phoneNumber}. They operate from ${city}`
+    } else {
+        data = `${name} sent a Contact Request to Waziifa You can reach them them at ${email} or ${phoneNumber}. They operate from ${city}`
     }
 
     ses.sendEmail({
         Destination: {
-            ToAddresses: ['karlgharios@hotmail.com', 'knhatem@gmail.com'],
+            ToAddresses: ['karl.gharios@waziifa.com', 'karim.hatem@waziifa.com'],
             CcAddresses: [],
             BccAddresses: []
         },
@@ -28,7 +30,7 @@ exports.handler = function async(event, context, callback) {
                 Data: 'Contact Request from' + name
             }
         },
-        Source: 'Wazifa No Reply <no-reply@wazifa.solutions>'
+        Source: 'Wazifa No Reply <no-reply@waziifa.com>'
     }, function (err, data) {
         console.log(err, data)
         const response = {
