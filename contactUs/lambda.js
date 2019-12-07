@@ -1,6 +1,5 @@
 let AWS = require('aws-sdk');
 const ses = new AWS.SES();
-const pug = require('pug');
 
 exports.handler = function async(event, context, callback) {
     console.log(event)
@@ -14,18 +13,7 @@ exports.handler = function async(event, context, callback) {
     } else {
         data = `${name} sent a Contact Request to Waziifa You can reach them them at ${email} or ${phoneNumber}. They operate from ${city}`
     }
-
-
-    const compiledFunction = pug.compileFile('views/index.pug');
-
-    var htmlData = compiledFunction({
-        name: name,
-        email: email,
-        phoneNumber:phoneNumber,
-        city: city,
-        description: description
-    })
-
+    console.log('test')
     ses.sendEmail({
         Destination: {
             ToAddresses: ['karl.gharios@waziifa.com', 'karim.hatem@waziifa.com'],
@@ -36,9 +24,6 @@ exports.handler = function async(event, context, callback) {
             Body: {
                 Text: {
                     Data: data
-                },
-                Html: {
-                    Data: htmlData
                 }
             },
             Subject: {
