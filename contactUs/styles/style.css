@@ -1,0 +1,17 @@
+header img {
+	max-width: 175px;
+}
+
+header {
+	background-color: black;
+	height: 200px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center
+}
+
+
+body {
+	font-family:'Open Sans', sans-serif;
+}

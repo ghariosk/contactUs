@@ -1,0 +1,17 @@
+html 
+	head
+		link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i', rel='stylesheet')
+		style
+			include ../styles/style.css
+
+	body
+		header
+			img(src="https://www.waziifa.com/logo-white.min.png")
+
+
+		.content
+			h1 #{name} wants to Contact Waziifa
+			p You can reach them at #{phoneNumber} or #{email}
+			p They live in #{city}
+			p This is their message:
+			p #{description}
